@@ -1,22 +1,18 @@
 import express from "express";
 import runGraph from "./ai/graph.ai.js";
+import cors from "cors";
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-
-// CORS — allow the Vite dev server
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") {
-    res.sendStatus(204);
-    return;
-  }
-  next();
-});
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  }),
+);
 
 // Health check
 app.get("/", (_req, res) => {
@@ -24,20 +20,20 @@ app.get("/", (_req, res) => {
 });
 
 // Battle endpoint
-app.post("/api/battle", async (req, res) => {
+app.post("/invoke", async (req, res) => {
   try {
     const { problem } = req.body;
-
-    if (!problem || typeof problem !== "string" || !problem.trim()) {
-      res.status(400).json({ error: "A non-empty 'problem' string is required." });
-      return;
+    if (!problem || !problem.trim()) {
+      return res.status(400).json({ error: "Problem cannot be empty" });
     }
 
-    const result = await runGraph(problem.trim());
+    const result = await runGraph(problem);
     res.json(result);
   } catch (err: any) {
     console.error("Battle error:", err);
-    res.status(500).json({ error: "Internal server error", message: err.message });
+    res
+      .status(500)
+      .json({ error: "Internal server error", message: err.message });
   }
 });
 
