@@ -56,7 +56,7 @@ export default function BattleArena({ phase, solution1, solution2, winner }) {
             {/* Orbiting ring effect */}
             {showVS && (
               <div
-                className="absolute inset-[-6px] rounded-full border border-tertiary/20 animate-spin"
+                className="absolute -inset-1.5  rounded-full border border-tertiary/20 animate-spin"
                 style={{ animationDuration: '8s' }}
               />
             )}

@@ -1,8 +1,8 @@
-import { useBattle } from '../hooks/useBattle';
-import { PHASES } from '../state/battleState';
-import InputSection from './InputSection';
-import BattleArena from './BattleArena';
-import JudgePanel from './JudgePanel';
+import { useBattle } from "../hooks/useBattle";
+import { PHASES } from "../state/battleState";
+import InputSection from "./InputSection";
+import BattleArena from "./BattleArena";
+import JudgePanel from "./JudgePanel";
 
 /**
  * BattlePage - Root page component for the AI Battle Arena
@@ -11,7 +11,6 @@ import JudgePanel from './JudgePanel';
 export default function BattlePage() {
   const {
     phase,
-    problem,
     solution1,
     solution2,
     judge,
@@ -30,12 +29,10 @@ export default function BattlePage() {
         {/* Decorative background text */}
         <div
           className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-          aria-hidden="true"
-        >
+          aria-hidden="true">
           <span
             className="text-[8rem] lg:text-[12rem] font-bold uppercase opacity-[0.02] leading-none"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
+            style={{ fontFamily: "var(--font-display)" }}>
             ARENA
           </span>
         </div>
@@ -43,54 +40,55 @@ export default function BattlePage() {
         <h1
           className="text-3xl lg:text-4xl font-bold uppercase tracking-[0.2em] relative"
           style={{
-            fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(135deg, #a8e8ff, #00d4ff, #ddb7ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
+            fontFamily: "var(--font-display)",
+            background: "linear-gradient(135deg, #a8e8ff, #00d4ff, #ddb7ff)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>
           AI Battle Arena
         </h1>
         <p
           className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mt-2"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
+          style={{ fontFamily: "var(--font-display)" }}>
           Two Models • One Challenge • One Winner
         </p>
 
         {/* Phase indicator */}
         {isActive && (
           <div className="mt-4 flex items-center justify-center gap-2">
-            {Object.values(PHASES).filter(p => p !== PHASES.IDLE).map((p) => (
-              <div
-                key={p}
-                className="flex items-center gap-1.5"
-              >
-                <div
-                  className={`
+            {Object.values(PHASES)
+              .filter((p) => p !== PHASES.IDLE)
+              .map((p) => (
+                <div key={p} className="flex items-center gap-1.5">
+                  <div
+                    className={`
                     w-1.5 h-1.5 rounded-full transition-all duration-300
-                    ${phase === p ? 'scale-150' : ''}
+                    ${phase === p ? "scale-150" : ""}
                   `}
-                  style={{
-                    background: phase === p
-                      ? '#ffdd4c'
-                      : Object.values(PHASES).indexOf(phase) > Object.values(PHASES).indexOf(p)
-                        ? '#00d4ff'
-                        : '#3c494e',
-                    boxShadow: phase === p ? '0 0 8px rgba(255, 221, 76, 0.6)' : 'none',
-                  }}
-                />
-                <span
-                  className={`text-[10px] uppercase tracking-wider hidden sm:inline ${
-                    phase === p ? 'text-tertiary' : 'text-outline-variant'
-                  }`}
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  {p}
-                </span>
-              </div>
-            ))}
+                    style={{
+                      background:
+                        phase === p
+                          ? "#ffdd4c"
+                          : Object.values(PHASES).indexOf(phase) >
+                              Object.values(PHASES).indexOf(p)
+                            ? "#00d4ff"
+                            : "#3c494e",
+                      boxShadow:
+                        phase === p
+                          ? "0 0 8px rgba(255, 221, 76, 0.6)"
+                          : "none",
+                    }}
+                  />
+                  <span
+                    className={`text-[10px] uppercase tracking-wider hidden sm:inline ${
+                      phase === p ? "text-tertiary" : "text-outline-variant"
+                    }`}
+                    style={{ fontFamily: "var(--font-display)" }}>
+                    {p}
+                  </span>
+                </div>
+              ))}
           </div>
         )}
       </header>
@@ -108,19 +106,17 @@ export default function BattlePage() {
           <div
             className="rounded-lg px-4 py-3 text-sm flex items-center gap-3"
             style={{
-              background: 'rgba(147, 0, 10, 0.15)',
-              border: '1px solid rgba(255, 180, 171, 0.2)',
-              color: '#ffb4ab',
-              fontFamily: 'var(--font-body)',
-            }}
-          >
+              background: "rgba(147, 0, 10, 0.15)",
+              border: "1px solid rgba(255, 180, 171, 0.2)",
+              color: "#ffb4ab",
+              fontFamily: "var(--font-body)",
+            }}>
             <span>⚠</span>
             {error}
             <button
               onClick={resetBattle}
               className="ml-auto text-xs uppercase tracking-wider font-bold hover:text-on-surface transition-colors cursor-pointer"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
+              style={{ fontFamily: "var(--font-display)" }}>
               Dismiss
             </button>
           </div>
@@ -134,23 +130,23 @@ export default function BattlePage() {
           <div className="relative w-16 h-16 mb-6">
             <div
               className="absolute inset-0 rounded-full border-2 border-primary-container/30 animate-spin"
-              style={{ animationDuration: '3s' }}
+              style={{ animationDuration: "3s" }}
             />
             <div
               className="absolute inset-1 rounded-full border-2 border-secondary-container/30 animate-spin"
-              style={{ animationDuration: '2s', animationDirection: 'reverse' }}
+              style={{ animationDuration: "2s", animationDirection: "reverse" }}
             />
             <div
               className="absolute inset-3 rounded-full"
               style={{
-                background: 'radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent)',
+                background:
+                  "radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent)",
               }}
             />
           </div>
           <span
             className="text-sm uppercase tracking-[0.2em] text-on-surface-variant animate-pulse-glow"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
+            style={{ fontFamily: "var(--font-display)" }}>
             Initiating Battle Sequence...
           </span>
         </div>
@@ -167,11 +163,7 @@ export default function BattlePage() {
       )}
 
       {/* ===== Judge Panel ===== */}
-      <JudgePanel
-        phase={phase}
-        judge={judge}
-        winner={winner}
-      />
+      <JudgePanel phase={phase} judge={judge} winner={winner} />
 
       {/* ===== Reset Button ===== */}
       {phase === PHASES.WINNER && (
@@ -183,8 +175,7 @@ export default function BattlePage() {
                        hover:border-primary-container/40 hover:text-primary
                        hover:shadow-[0_0_20px_rgba(0,212,255,0.15)]
                        transition-all duration-300 cursor-pointer"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
+            style={{ fontFamily: "var(--font-display)" }}>
             ⚔ New Battle
           </button>
         </div>
@@ -194,9 +185,8 @@ export default function BattlePage() {
       <footer className="mt-auto py-4 text-center">
         <p
           className="text-[10px] uppercase tracking-[0.2em] text-outline-variant"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          Powered by AI • CyberPulse Neon
+          style={{ fontFamily: "var(--font-display)" }}>
+          AI Clash Platform • Next Generation
         </p>
       </footer>
     </div>

@@ -1,35 +1,37 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 /**
  * InputSection - The battle challenge input area
  * Glassmorphism panel with neon-focused textarea and CTA button
  */
 export default function InputSection({ onStartBattle, isActive, isLoading }) {
-  const [problem, setProblem] = useState('');
+  const [problem, setProblem] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (problem.trim() && !isLoading) {
       onStartBattle(problem);
+      setProblem("");
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
     }
   };
 
   return (
-    <section id="input-section" className="w-full max-w-3xl mx-auto px-4 pt-6 pb-8">
+    <section
+      id="input-section"
+      className="w-full max-w-3xl mx-auto px-4 pt-6 pb-8">
       <form onSubmit={handleSubmit} className="relative">
         {/* Label */}
         <label
           htmlFor="battle-prompt"
           className="block text-xs font-semibold uppercase tracking-[0.15em] text-on-surface-variant mb-3"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
+          style={{ fontFamily: "var(--font-display)" }}>
           Enter Challenge
         </label>
 
@@ -49,7 +51,7 @@ export default function InputSection({ onStartBattle, isActive, isLoading }) {
                        focus:outline-none focus:border-primary-container/50
                        transition-all duration-300
                        disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ fontFamily: 'var(--font-body)' }}
+            style={{ fontFamily: "var(--font-body)" }}
           />
 
           {/* Glow line on focus */}
@@ -66,26 +68,28 @@ export default function InputSection({ onStartBattle, isActive, isLoading }) {
                        hover:scale-105 active:scale-95 active:animate-flicker
                        cursor-pointer"
             style={{
-              fontFamily: 'var(--font-display)',
-              background: problem.trim() && !isLoading
-                ? 'linear-gradient(135deg, #a8e8ff, #00d4ff)'
-                : 'rgba(60, 73, 78, 0.3)',
-              color: problem.trim() && !isLoading ? '#003642' : '#859398',
-              boxShadow: problem.trim() && !isLoading
-                ? '0 0 20px rgba(0, 212, 255, 0.3)'
-                : 'none',
-              clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)',
-            }}
-          >
+              fontFamily: "var(--font-display)",
+              background:
+                problem.trim() && !isLoading
+                  ? "linear-gradient(135deg, #a8e8ff, #00d4ff)"
+                  : "rgba(60, 73, 78, 0.3)",
+              color: problem.trim() && !isLoading ? "#003642" : "#859398",
+              boxShadow:
+                problem.trim() && !isLoading
+                  ? "0 0 20px rgba(0, 212, 255, 0.3)"
+                  : "none",
+              clipPath:
+                "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)",
+            }}>
             {isLoading ? (
               <span className="flex items-center gap-2">
                 <span className="inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
                 Fighting...
               </span>
             ) : isActive ? (
-              'New Battle'
+              "New Battle"
             ) : (
-              '⚔ Start Battle'
+              "⚔ Start Battle"
             )}
           </button>
         </div>
