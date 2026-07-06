@@ -33,7 +33,7 @@ export default function BattlePage() {
           <span
             className="text-[8rem] lg:text-[12rem] font-bold uppercase opacity-[0.02] leading-none"
             style={{ fontFamily: "var(--font-display)" }}>
-            ARENA
+            COMBAT
           </span>
         </div>
 
@@ -46,7 +46,7 @@ export default function BattlePage() {
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
           }}>
-          AI Battle Arena
+          AI Combat 
         </h1>
         <p
           className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mt-2"
@@ -127,7 +127,7 @@ export default function BattlePage() {
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
           {/* Glitch loader */}
-          <div className="relative w-16 h-16 mb-6">
+          <div className="absolute w-16 h-16 mb-6">
             <div
               className="absolute inset-0 rounded-full border-2 border-primary-container/30 animate-spin"
               style={{ animationDuration: "3s" }}
@@ -144,10 +144,19 @@ export default function BattlePage() {
               }}
             />
           </div>
-          <span
+          {/* <span
             className="text-sm uppercase tracking-[0.2em] text-on-surface-variant animate-pulse-glow"
             style={{ fontFamily: "var(--font-display)" }}>
             Initiating Battle Sequence...
+          </span> */}
+          <span className="flex items-center justify-center   text-on-surface-variant animate-pulse-glow">
+            <video
+              className="w-full h-full object-cover opacity-80 "
+              src="/fight.webm"
+              autoPlay
+              loop
+              muted
+            />
           </span>
         </div>
       )}
