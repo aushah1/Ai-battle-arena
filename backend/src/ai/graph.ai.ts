@@ -9,6 +9,24 @@ import z from "zod";
 import { mistralAIModel, cohereAIModel, geminiModel } from "./models.ai.js";
 import { createAgent, HumanMessage, providerStrategy } from "langchain";
 
+function extractText(response: { text?: string; content?: unknown }) {
+  if (typeof response.text === "string" && response.text.trim()) {
+    return response.text;
+  }
+
+  if (typeof response.content === "string") {
+    return response.content;
+  }
+
+  if (Array.isArray(response.content)) {
+    return response.content
+      .map((item: any) => (typeof item?.text === "string" ? item.text : ""))
+      .join("");
+  }
+
+  return "";
+}
+
 const state = new StateSchema({
   problem: z.string().default(""),
   solution_1: z.string().default(""),
@@ -28,8 +46,12 @@ const solutionNode: GraphNode<typeof state> = async (state) => {
   ]);
 
   return {
-    solution_1: mistralResponse.text,
-    solution_2: cohereResponse.text,
+    solution_1: extractText(
+      mistralResponse as { text?: string; content?: unknown },
+    ),
+    solution_2: extractText(
+      cohereResponse as { text?: string; content?: unknown },
+    ),
   };
 };
 
@@ -79,7 +101,7 @@ const judgeNode: GraphNode<typeof state> = async (state) => {
   };
 };
 
-const graph = new StateGraph(state)
+const graph: any = new StateGraph(state)
   .addNode("solution", solutionNode)
   .addNode("judge_node", judgeNode)
   .addEdge(START, "solution")
