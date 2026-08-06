@@ -18,8 +18,11 @@ app.use(
 );
 
 // Health check
-app.get("/", (_req, res) => {
-  res.json({ status: "ok", service: "AI Battle Arena API" });
+app.get("/api/health", (_req, res) => {
+  res.json({
+    status: "ok",
+    service: "AI Battle Arena API",
+  });
 });
 
 // Battle endpoint
@@ -43,13 +46,11 @@ app.post("/invoke", async (req, res) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve React build
-const frontendPath = path.join(__dirname, "../../frontend/dist");
+const frontendPath = path.join(__dirname, "../public");
 
 app.use(express.static(frontendPath));
 
 app.get("/{*any}", (req, res, next) => {
-  // Don't override API routes
   if (req.path.startsWith("/invoke")) return next();
 
   res.sendFile(path.join(frontendPath, "index.html"));
