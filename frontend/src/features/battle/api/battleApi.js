@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/invoke';
+const API_URL = "/invoke";
 
 /**
  * Invokes a battle by sending a problem to the backend.
@@ -7,15 +7,17 @@ const API_URL = 'http://localhost:3000/invoke';
  */
 export async function invokeBattle(problem) {
   const response = await fetch(API_URL, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ problem }),
   });
 
   if (!response.ok) {
-    throw new Error(`Battle API error: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Battle API error: ${response.status} ${response.statusText}`,
+    );
   }
 
   const data = await response.json();
